@@ -59,20 +59,27 @@ function App(): React.JSX.Element {
         text: gameWinner,
         backgroundColor: 'green',
         textColor: '#FFF'
-      })
+      });
     }
+  
     if (gameState[itemNumber] === 'empty') {
-      gameState[itemNumber] = isCross ? 'cross' : 'circle';
-      setIsCross(true);
+      setGameState(prevState => {
+        const newState = [...prevState];
+        newState[itemNumber] = isCross ? 'cross' : 'circle';
+        return newState;
+      });
+      setIsCross(prevCross => !prevCross); // Toggle between cross and circle
     } else {
       return Snackbar.show({
         text: "Position is already filled.",
         backgroundColor: 'red',
         textColor: '#FFF'
-      })
+      });
     }
-    checkIsWinner();
-  }
+  
+    checkIsWinner(); // Call checkIsWinner after updating the state
+  };
+  
 
   return (
     <SafeAreaView >
